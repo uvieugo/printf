@@ -11,30 +11,33 @@
 int _printf(const char *format, ...)
 {
 	int i;
-	char *str;
 	va_list arg_list;
 
 	i = 0;
 	va_start(arg_list, format);
 	while (i >= 0)
 	{
-		if (format[i] == '\0')
-		{
-			break;
-		}
 		if (format[i] == '%')
 		{
-			if (format[i + 1] == 'c')
+			if (format[i] == '\0')
 			{
-				print_char(va_arg(arg_list, int));
+				va_end(arg_list);
+				return(-1);
+			}
+			else
+			{
+				if (format[i + 1] == 'c')
+				{
+					print_char(arg_list);
+					i++;
+				}
+				if (format[i + 1] == 's')
+				{
+					print_str(arg_list);
+					i++;
+				}
 				i++;
 			}
-			if (format[i + 1] == 's')
-			{
-				print_str(va_arg(arg_list, int));
-				i++;
-			}
-			i++;
 		}
 		else
 		{
@@ -42,5 +45,6 @@ int _printf(const char *format, ...)
 			i++;
 		}
 	}
+	va_end(arg_list);
 	return (0);
 }

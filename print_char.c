@@ -7,8 +7,11 @@
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int print_char(char c)
+int print_char(va_list arg_list)
 {
+	char c;
+
+	c = va_arg(arg_list, int);
 	_putchar(c);
 	return (0);
 }
